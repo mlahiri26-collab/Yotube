@@ -1,6 +1,5 @@
 <script>
   const correctPassword = "7Djhingalalalulu"; 
-
   const userPassword = prompt("Enter the password to access this site:");
 
   if (userPassword !== correctPassword) {
@@ -8,6 +7,7 @@
     throw new Error("Incorrect password");
   }
 </script> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,15 +60,28 @@
         font-size: 1.2rem;
         text-align: center;
     }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 20px;
+      background: #4285F4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
 </style>
 </head>
 <body>
 
 <h1>The video page</h1>
 
+<button onclick="googleLogin()">Continue with Google</button>
+
 <div class="gallery">
 
-    <!-- Anubhav's F1 edit (FIXED) -->
     <div class="video-card">
         <video controls>
             <source src="https://drive.google.com/uc?export=download&id=1FOOu2pUXe7-9GzRxdWjhwqzXMTBPaN5R" type="video/mp4">
@@ -76,7 +89,6 @@
         <div class="title">Anubhav f1 edit.</div>
     </div>
 
-    <!-- VIDEO 2 (Replace with real ID when you have it) -->
     <div class="video-card">
         <video controls>
             <source src="https://drive.google.com/uc?export=download&id=REPLACE_WITH_ID" type="video/mp4">
@@ -84,7 +96,6 @@
         <div class="title">Video 2</div>
     </div>
 
-    <!-- VIDEO 3 -->
     <div class="video-card">
         <video controls>
             <source src="https://drive.google.com/uc?export=download&id=REPLACE_WITH_ID" type="video/mp4">
@@ -92,7 +103,6 @@
         <div class="title">Video 3</div>
     </div>
 
-    <!-- VIDEO 4 -->
     <div class="video-card">
         <video controls>
             <source src="https://drive.google.com/uc?export=download&id=REPLACE_WITH_ID" type="video/mp4">
@@ -102,7 +112,38 @@
 
 </div>
 
+<!-- ========== FIREBASE AUTH + GOOGLE LOGIN ========== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup } 
+    from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDqtqfoxlk5htpn0z4QTBVXSGbLS8AYpTo",
+    authDomain: "yotube-26a15.firebaseapp.com",
+    projectId: "yotube-26a15",
+    storageBucket: "yotube-26a15.firebasestorage.app",
+    messagingSenderId: "194308076420",
+    appId: "1:194308076420:web:fef79f02ea66e8d95b23d1",
+    measurementId: "G-VD0K1K5D5Z"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // this function gets called when user clicks the button
+  window.googleLogin = function () {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        alert("Logged in as " + result.user.email);
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Login failed");
+      });
+  };
+</script>
+
 </body>
 </html>
-
-
